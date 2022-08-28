@@ -1,0 +1,67 @@
+{
+  "name": "cryptor",
+  "version": "0.0.1",
+  "description": "Post quantum file encryption",
+  "main": "src/main.js",
+  "private": true,
+  "scripts": {
+    "style": "standard",
+    "fix_style": "standard --fix",
+    "sphincs": "node ./src/sphincs2.js",
+    "encrypt": "node ./src/encryption.js",
+    "decrypt": "node ./src/decryption.js",
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HollishKid/Cryptor.git"
+  },
+  "author": "HollishKid",
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/HollishKid/Cryptor/issues"
+  },
+  "homepage": "https://github.com/HollishKid/Cryptor#readme",
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0",
+    "supersphincs": "^8.0.2"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.65",
+    "@electron-forge/maker-deb": "^6.0.0-beta.65",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.65",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.65",
+    "@electron-forge/maker-zip": "^6.0.0-beta.65",
+    "electron": "^20.0.2",
+    "standard": "^17.0.0"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "Cryptor"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
+  }
+}

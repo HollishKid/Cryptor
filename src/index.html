@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
+    <link href="./styles.css" rel="stylesheet">
+    <title>Cryptor</title>
+</head>
+
+<body>
+    <h1>Hello World!</h1>
+    <h2 id="pwd"></h2>
+    <label for="passphrase">Password:</label>
+    <input id="passphrase" type="password">
+    <button id="encrypt">Encrypt</button>
+    <button id="decrypt">Decrypt</button>
+    <button id="path">Choose path...</button>
+
+    <script src="./renderer.js"></script>
+</body>
+
+</html>
