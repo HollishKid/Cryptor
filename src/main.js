@@ -30,7 +30,8 @@ function createWindow() {
 
 function createHandlers() {
   ipcMain.handle('directory:choose', () => { return utilities.chooseDirectory() })
-  ipcMain.handle('directory:check', (event, directory) => { return utilities.checkDirectory(directory) })
+  ipcMain.handle('directory:checkInput', (event, directory) => { return utilities.checkInputDirectory(directory) })
+  ipcMain.handle('directory:checkOutput', (event, directory) => { return utilities.checkOutputDirectory(directory) })
 }
 
 // This method will be called when Electron has finished
