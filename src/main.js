@@ -4,6 +4,8 @@ const { app, BrowserWindow, dialog, ipcMain } = require('electron')
 const path = require('path')
 
 const utilities = require('./utilities')
+const decryption = require('./decryption')
+const encryption = require('./encryption')
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
@@ -29,9 +31,21 @@ function createWindow() {
 }
 
 function createHandlers() {
-  ipcMain.handle('directory:choose', () => { return utilities.chooseDirectory() })
-  ipcMain.handle('directory:checkInput', (event, directory) => { return utilities.checkInputDirectory(directory) })
-  ipcMain.handle('directory:checkOutput', (event, directory) => { return utilities.checkOutputDirectory(directory) })
+  ipcMain.handle('directory:choose', () => {
+    return utilities.chooseDirectory()
+  })
+  ipcMain.handle('directory:canRead', (event, directory) => {
+    return utilities.canReadDirectory(directory)
+  })
+  ipcMain.handle('directory:canOutput', (event, directory) => {
+    return utilities.canOutput(directory)
+  })
+  ipcMain.handle('encryption:run', (event, inputDirectory, outputDirectory, passphraseValue) => {
+    return encryption.run(inputDirectory, outputDirectory, passphraseValue)
+  })
+  ipcMain.handle('decryption:run', (event, inputDirectory, outputDirectory, passphraseValue) => {
+    return decryption.run(inputDirectory, outputDirectory, passphraseValue)
+  })
 }
 
 // This method will be called when Electron has finished

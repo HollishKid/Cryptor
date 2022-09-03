@@ -3,18 +3,21 @@
 const { contextBridge, ipcRenderer } = require('electron')
 const path = require('path')
 
-const decryption = require('./decryption')
-const encryption = require('./encryption')
-
 contextBridge.exposeInMainWorld('electronAPI', {
-  encrypt: (directory, passphraseValue) => {
+  encrypt: (inputDirectory, outputDirectory, passphraseValue) => {
     console.log('encrypt')
-    encryption.run(directory, passphraseValue)
+    //encryption.run(inputDirectory, outputDirectory, passphraseValue)
+    return ipcRenderer.invoke('encryption:run', inputDirectory, outputDirectory, passphraseValue)
   },
-  decrypt: (directory, passphraseValue) => { decryption.run(directory, passphraseValue) },
-  getDefaultInputDir: () => { return __dirname },
-  getDefaultOutputDir: () => { return path.join(__dirname, 'encrypted') },
-  checkInputDirectory: (directory) => { return ipcRenderer.invoke('directory:checkInput', directory) },
-  checkOutputDirectory: (directory) => { return ipcRenderer.invoke('directory:checkOutput', directory) },
+  decrypt: (inputDirectory, outputDirectory, passphraseValue) => {
+    console.log('decrypt')
+    return ipcRenderer.invoke('decryption:run', inputDirectory, outputDirectory, passphraseValue)
+  },
+  getDefaultEncryptInputDir: () => { return __dirname },
+  getDefaultEncryptOutputDir: () => { return path.join(__dirname, 'encrypted') },
+  getDefaultDecryptInputDir: () => { return path.join(__dirname, 'encrypted') },
+  getDefaultDecryptOutputDir: () => { return __dirname },
+  canReadDirectory: (directory) => { return ipcRenderer.invoke('directory:canRead', directory) },
+  canOutputDirectory: (directory) => { return ipcRenderer.invoke('directory:canOutput', directory) },
   chooseDirectory: () => { return ipcRenderer.invoke('directory:choose') }
 })
